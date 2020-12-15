@@ -103,6 +103,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		$data['text_step_3'] = $this->language->get('text_step_3');
 		$data['text_db_connection'] = $this->language->get('text_db_connection');
 		$data['text_db_administration'] = $this->language->get('text_db_administration');
+		$data['text_hdb'] = $this->language->get('text_hdb');		
 		$data['text_mysqli'] = $this->language->get('text_mysqli');
 		$data['text_mpdo'] = $this->language->get('text_mpdo');
 		$data['text_pgsql'] = $this->language->get('text_pgsql');
@@ -184,6 +185,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		$data['action'] = $this->url->link('install/step_3', 'language=' . $this->config->get('language_code'));
 
 		$db_drivers = [
+			'hdb',
 			'mysqli',
 			'pdo',
 			'pgsql'
@@ -291,6 +293,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		}
 
 		$db_drivers = [
+			'hdb',
 			'mysqli',
 			'pdo',
 			'pgsql'
