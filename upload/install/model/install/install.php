@@ -34,11 +34,11 @@ class Install extends \Opencart\System\Engine\Model {
 					$fieldtype = 'tinyint';
 					break;
 
-				case (strstr($field['type'], "smallint")):
+				case (strpos($field['type'], "smallint")):
 					$fieldtype = 'smallint';
 					break;
 
-				case (strstr($field['type'], "double")):
+				case (strpos($field['type'], "double")):
 					$fieldtype = 'double';
 					break;
 
