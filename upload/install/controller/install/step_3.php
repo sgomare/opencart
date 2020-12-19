@@ -194,12 +194,12 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		$data['drivers'] = [];
 
 		foreach ($db_drivers as $db_driver) {
-			if (extension_loaded($db_driver)) {
+			// if (extension_loaded($db_driver)) {
 				$data['drivers'][] = [
 					'text'  => $this->language->get('text_' . $db_driver),
 					'value' => $db_driver
 				];
-			}
+			// }
 		}
 
 		if (isset($this->request->post['db_driver'])) {
