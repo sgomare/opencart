@@ -14,7 +14,7 @@ class Menu extends \Opencart\System\Engine\Controller {
 		$categories = $this->model_catalog_category->getCategories(0);
 
 		foreach ($categories as $category) {
-			if ($category['top']) {
+			if ($category['topcat']) {
 				// Level 2
 				$children_data = [];
 
