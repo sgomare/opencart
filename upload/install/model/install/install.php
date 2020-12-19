@@ -31,22 +31,24 @@ class Install extends \Opencart\System\Engine\Model {
 
 				$sql .= "  PRIMARY KEY (" . implode(",", $primary_data) . "),\n";
 			}
+			// HANA DB does not support engines
+			// if (isset($table['index'])) {
+			// 	foreach ($table['index'] as $index) {
+			// 		$index_data = [];
 
-			if (isset($table['index'])) {
-				foreach ($table['index'] as $index) {
-					$index_data = [];
+			// 		foreach ($index['key'] as $key) {
+			// 			$index_data[] = "`" . $key . "`";
+			// 		}
 
-					foreach ($index['key'] as $key) {
-						$index_data[] = "`" . $key . "`";
-					}
+			// 		$sql .= "  KEY `" . $index['name'] . "` (" . implode(",", $index_data) . "),\n";
+			// 	}
+			// }
 
-					$sql .= "  KEY `" . $index['name'] . "` (" . implode(",", $index_data) . "),\n";
-				}
-			}
-
+			// $sql = rtrim($sql, ",\n") . "\n";
+			// $sql .= ") ENGINE=" . $table['engine'] . " CHARSET=" . $table['charset'] . " COLLATE=" . $table['collate'] . ";\n";
 			$sql = rtrim($sql, ",\n") . "\n";
-			$sql .= ") ENGINE=" . $table['engine'] . " CHARSET=" . $table['charset'] . " COLLATE=" . $table['collate'] . ";\n";
-
+			$sql .= ");";
+			$sql = str_replace("`", "",$sql);									
 			$db->query($sql);
 		}
 
@@ -70,8 +72,10 @@ class Install extends \Opencart\System\Engine\Model {
 				}
 
 				if (substr($line, -2) == ');') {
-					$db->query(str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql));
-
+					$sql = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql);
+					//HANA does not support multiline insert in single line
+					$sqlformat = str_replace("),", ");\n".substr($sql, 0, strpos($sql, "VALUES"))."VALUES", $sql);
+					$sqlformat = $sqlformat."\n";
 					$start = false;
 				}
 			}
@@ -79,24 +83,24 @@ class Install extends \Opencart\System\Engine\Model {
 
 		$db->query("SET CHARACTER SET utf8");
 
-		$db->query("DELETE FROM `" . $data['db_prefix'] . "user` WHERE `user_id` = '1'");
-		$db->query("INSERT INTO `" . $data['db_prefix'] . "user` SET `user_id` = '1', `user_group_id` = '1', `username` = '" . $db->escape($data['username']) . "', `salt` = '', `password` = '" . $db->escape(password_hash(html_entity_decode($data['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', `firstname` = 'John', `lastname` = 'Doe', `email` = '" . $db->escape($data['email']) . "', `status` = '1', `date_added` = NOW()");
+		$db->query("DELETE FROM " . $data['db_prefix'] . "user WHERE user_id = '1'");
+		$db->query("INSERT INTO " . $data['db_prefix'] . "user SET user_id = '1', user_group_id = '1', username = '" . $db->escape($data['username']) . "', salt = '', password = '" . $db->escape(password_hash(html_entity_decode($data['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', firstname = 'John', lastname = 'Doe', email = '" . $db->escape($data['email']) . "', status = '1', date_added = NOW()");
 		
-		$db->query("DELETE FROM `" . $data['db_prefix'] . "setting` WHERE `key` = 'config_email'");
-		$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_email', `value` = '" . $db->escape($data['email']) . "'");
-		$db->query("DELETE FROM `" . $data['db_prefix'] . "setting` WHERE `key` = 'config_encryption'");
-		$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_encryption', `value` = '" . $db->escape(token(1024)) . "'");
+		$db->query("DELETE FROM " . $data['db_prefix'] . "setting WHERE key = 'config_email'");
+		$db->query("INSERT INTO " . $data['db_prefix'] . "setting SET code = 'config', key = 'config_email', value = '" . $db->escape($data['email']) . "'");
+		$db->query("DELETE FROM " . $data['db_prefix'] . "setting WHERE key = 'config_encryption'");
+		$db->query("INSERT INTO " . $data['db_prefix'] . "setting SET code = 'config', key = 'config_encryption', value = '" . $db->escape(token(1024)) . "'");
 
-		$db->query("UPDATE `" . $data['db_prefix'] . "product` SET `viewed` = '0'");
+		$db->query("UPDATE " . $data['db_prefix'] . "product SET viewed = '0'");
 
-		$db->query("INSERT INTO `" . $data['db_prefix'] . "api` SET `username` = 'Default', `key` = '" . $db->escape(token(256)) . "', `status` = 1, `date_added` = NOW(), `date_modified` = NOW()");
+		$db->query("INSERT INTO " . $data['db_prefix'] . "api SET username = 'Default', key = '" . $db->escape(token(256)) . "', status = 1, date_added = NOW(), date_modified = NOW()");
 
 		$api_id = $db->getLastId();
 
-		$db->query("DELETE FROM `" . $data['db_prefix'] . "setting` WHERE `key` = 'config_api_id'");
-		$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_api_id', `value` = '" . (int)$api_id . "'");
+		$db->query("DELETE FROM " . $data['db_prefix'] . "setting WHERE key = 'config_api_id'");
+		$db->query("INSERT INTO " . $data['db_prefix'] . "setting SET code = 'config', key = 'config_api_id', value = '" . (int)$api_id . "'");
 
 		// set the current years prefix
-		$db->query("UPDATE `" . $data['db_prefix'] . "setting` SET `value` = 'INV-" . date('Y') . "-00' WHERE `key` = 'config_invoice_prefix'");
+		$db->query("UPDATE " . $data['db_prefix'] . "setting SET value = 'INV-" . date('Y') . "-00' WHERE key = 'config_invoice_prefix'");
 	}
 }

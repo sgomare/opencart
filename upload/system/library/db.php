@@ -43,6 +43,7 @@ class DB {
 	 * @return	array
      */
 	public function query($sql) {
+		$sql = str_replace("`", "",$sql);
 		return $this->adaptor->query($sql);
 	}
 

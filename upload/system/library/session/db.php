@@ -30,7 +30,7 @@ final class DB {
 
 	public function write($session_id, $data) {
 		if ($session_id) {
-			$this->db->query("REPLACE INTO `" . DB_PREFIX . "session` SET `session_id` = '" . $this->db->escape($session_id) . "', `data` = '" . $this->db->escape($data ? json_encode($data) : '') . "', `expire` = '" . $this->db->escape(date('Y-m-d H:i:s', time() + $this->expire)) . "'");
+			$this->db->query("REPLACE `" . DB_PREFIX . "session` (session_id,data,expire) VALUES( '" . $this->db->escape($session_id) . "', '" . $this->db->escape($data ? json_encode($data) : '') . "', '" . $this->db->escape(date('Y-m-d H:i:s', time() + $this->expire)) . "');");
 		}
 
 		return true;
