@@ -76,7 +76,7 @@ class Install extends \Opencart\System\Engine\Model {
 
 		// Data
 		$lines = file(DIR_APPLICATION . 'opencart.sql', FILE_IGNORE_NEW_LINES);
-
+		$final = "";
 		if ($lines) {
 			$sql = '';
 
@@ -99,11 +99,16 @@ class Install extends \Opencart\System\Engine\Model {
 					$sqlformat = str_replace("),", ");\n".substr($sql, 0, strpos($sql, "VALUES"))."VALUES", $sql);
 					$sqlformat = $sqlformat."\n";
 					$sqlformat = str_replace("`", "",$sqlformat);														
-					$db->query($sqlformat);
+					$final .= $sqlformat;
 					$start = false;
 				}
-			}
+			}	
 		}
+		$sqls = explode(");", $final);
+        foreach($sqls as $sql) {
+        $sql = trim($sql).");";
+        $db->query($sql);
+       }
 
 		$db->query("SET CHARACTER SET utf8");
 
