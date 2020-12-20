@@ -20,7 +20,7 @@ If you are __upgrading your existing cart__, be sure to read the [upgrade instru
 		If 0755 does not work try 0777.
 
 5. Make sure you have installed SAP HANA Database, HDB is case sensitive so make sure to enter exact details.
-6. The default port for HDB express edition is 39013, in general HDB port is based on instance, i.e 3<instance number>13.
+6. The default port for HDB express edition is 39013, in general HDB port is based on instance, i.e 3instance number13.
 7. Visit the store homepage e.g. http://www.example.com or http://www.example.com/store/
 8. You should be taken to the installer page. Follow the on screen instructions.
 9. After successful install, delete the /install/ directory from ftp.
@@ -37,7 +37,7 @@ If you are __upgrading your existing cart__, be sure to read the [upgrade instru
 		admin/config.php
 
 5. Make sure you have installed SAP HANA Database, HDB is case sensitive so make sure to enter exact details.
-6. The default port for HDB express edition is 39013, in general HDB port is based on instance, i.e 3<instance number>13.
+6. The default port for HDB express edition is 39013, in general HDB port is based on instance, i.e 3instance number13.
 7. You should be taken to the installer page. Follow the on screen instructions.
 8. After successful install, delete the /install/ directory.
 
