@@ -19,11 +19,12 @@ If you are __upgrading your existing cart__, be sure to read the [upgrade instru
 
 		If 0755 does not work try 0777.
 
-5. Make sure you have installed SAP HANA Database
-6. Visit the store homepage e.g. http://www.example.com or http://www.example.com/store/
-7. You should be taken to the installer page. Follow the on screen instructions.
-8. After successful install, delete the /install/ directory from ftp.
-9. If you have downloaded the compiled version with a folder called "vendor" - this should be uploaded above the webroot (so the same folder where the public_html or httpdocs is)
+5. Make sure you have installed SAP HANA Database, HDB is case sensitive so make sure to enter exact details.
+6. The default port for HDB express edition is 39013, in general HDB port is based on instance, i.e 3<instance number>13.
+7. Visit the store homepage e.g. http://www.example.com or http://www.example.com/store/
+8. You should be taken to the installer page. Follow the on screen instructions.
+9. After successful install, delete the /install/ directory from ftp.
+10. If you have downloaded the compiled version with a folder called "vendor" - this should be uploaded above the webroot (so the same folder where the public_html or httpdocs is)
 
 
 ## Windows Install
@@ -35,9 +36,10 @@ If you are __upgrading your existing cart__, be sure to read the [upgrade instru
 		config.php
 		admin/config.php
 
-4. Make sure you have installed SAP HANA Database.
-5. You should be taken to the installer page. Follow the on screen instructions.
-6. After successful install, delete the /install/ directory.
+5. Make sure you have installed SAP HANA Database, HDB is case sensitive so make sure to enter exact details.
+6. The default port for HDB express edition is 39013, in general HDB port is based on instance, i.e 3<instance number>13.
+7. You should be taken to the installer page. Follow the on screen instructions.
+8. After successful install, delete the /install/ directory.
 
 ## Local Install
 
