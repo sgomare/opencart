@@ -19,8 +19,7 @@ If you are __upgrading your existing cart__, be sure to read the [upgrade instru
 
 		If 0755 does not work try 0777.
 
-5. Make sure you have installed a MySQL Database which has a user assigned to it
-	* do not use your `root` username and root password
+5. Make sure you have installed SAP HANA Database
 6. Visit the store homepage e.g. http://www.example.com or http://www.example.com/store/
 7. You should be taken to the installer page. Follow the on screen instructions.
 8. After successful install, delete the /install/ directory from ftp.
@@ -36,8 +35,7 @@ If you are __upgrading your existing cart__, be sure to read the [upgrade instru
 		config.php
 		admin/config.php
 
-4. Make sure you have installed a MySQL Database which has a user assigned to it
-	* do not use your `root` username and root password
+4. Make sure you have installed SAP HANA Database.
 5. You should be taken to the installer page. Follow the on screen instructions.
 6. After successful install, delete the /install/ directory.
 
